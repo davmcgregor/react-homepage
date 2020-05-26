@@ -3,9 +3,9 @@ import axios from "axios";
 
 import { Form, Button, InputGroup } from "react-bootstrap";
 
-function FormContent({ onHide }) {
-  const [validated, setValidated] = useState(false);
-  const [error, setError] = useState("");
+const FormContent = ({ onHide }) => {
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState(" ");
@@ -13,45 +13,35 @@ function FormContent({ onHide }) {
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
+    event.preventDefault();
 
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    } else if (email !== confirmEmail) {
+    if (email !== confirmEmail) {
       alert("emails do not match");
-      event.preventDefault();
-      event.stopPropagation();
-    } else {
+      return;
+    }
+
+    const isValid = form.checkValidity();
+    if (isValid) {
       axios
         .post(
           "https://yo7dm2sa2i.execute-api.eu-west-2.amazonaws.com/prod/signup",
           { name, email }
         )
         .then((res) => {
-          console.log(res.data.success);
+          return res.data.success;
         })
         .catch((error) => {
-          if (error.response) {
-            console.log(error.response.data);
-            setError(error.response.data.error);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            console.log(error.request);
-          } else {
-            console.log("Error", error.message);
-          }
-          console.log(error);
+          setError(error.response.data.error);
         });
-      setValidated(true);
+      setSuccess(true);
     }
   };
 
-  if (validated === false) {
+  if (!success) {
     return (
       <div style={{ textAlign: "center" }}>
         <h1 style={{ padding: "3%" }}>Request an Invite</h1>
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <Form noValidate success={success} onSubmit={handleSubmit}>
           <Form.Group controlId="formName">
             <InputGroup size="lg" style={{ padding: "3% 0 1.5% 0" }}>
               <InputGroup.Prepend>
@@ -128,7 +118,22 @@ function FormContent({ onHide }) {
         </Form>
       </div>
     );
-  } else if (error.length < 1) {
+  } else if (error) {
+    return (
+      <div>
+        <h1 style={{ padding: "2%" }}>{error}</h1>
+        <Button
+          type="button"
+          size="lg"
+          variant="dark"
+          style={{ padding: "1% 8% 1% 8%" }}
+          onClick={onHide}
+        >
+          OK
+        </Button>
+      </div>
+    );
+  } else {
     return (
       <div>
         <h1 style={{ padding: "2%" }}>All done!</h1>
@@ -146,22 +151,7 @@ function FormContent({ onHide }) {
         </Button>
       </div>
     );
-  } else {
-    return (
-      <div>
-        <h1 style={{ padding: "2%" }}>{error}</h1>
-        <Button
-          type="button"
-          size="lg"
-          variant="dark"
-          style={{ padding: "1% 8% 1% 8%" }}
-          onClick={onHide}
-        >
-          OK
-        </Button>
-      </div>
-    );
   }
-}
+};
 
 export default FormContent;

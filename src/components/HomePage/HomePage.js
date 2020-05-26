@@ -5,7 +5,7 @@ import FormModal from "../FormModal/FormModal";
 
 import "./HomePage.css";
 
-function HomePage() {
+const HomePage = () => {
   const [modalShow, setModalShow] = React.useState(false);
 
   return (

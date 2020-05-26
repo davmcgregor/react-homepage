@@ -5,7 +5,7 @@ import FormContent from "../FormContent.js";
 
 import "./FormModal.css"
 
-function FormModal({show, onHide}) {
+const FormModal = ({show, onHide}) => {
   return (
     <Modal
       show={show}

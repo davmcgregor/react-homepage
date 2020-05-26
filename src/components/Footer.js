@@ -1,8 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import { Navbar } from "react-bootstrap";
 
-class Footer extends Component {
-  render() {
+const Footer = () => {
     return (
       <Navbar
         style={{
@@ -21,7 +20,6 @@ class Footer extends Component {
         </Navbar.Brand>
       </Navbar>
     );
-  }
 }
 
 export default Footer;
