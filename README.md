@@ -1,6 +1,6 @@
 # React Homepage 💻
 
-![react-homepage](react-homepage.gif)
+![react-homepage](./public/react-homepage.gif)
 
 A single-page React app that allows users to submit a form requesting an 'invite'. If user input is validated then the form makes a POST request to an API endpoint. This project was bootstrapped with Create React App.
 
