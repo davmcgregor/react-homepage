@@ -5,21 +5,20 @@ function FormContent({ onHide }) {
   const [validated, setValidated] = useState(false);
 
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(" ");
   const [confirmEmail, setconfirmEmail] = useState("");
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
-    if (email !== confirmEmail) {
-      alert("emails do not match");
-      event.preventDefault();
-      event.stopPropagation();
-    }
+
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
+    } else if (email !== confirmEmail) {
+      alert("emails do not match");
+      event.preventDefault();
+      event.stopPropagation();
     } else {
-      console.log(name, email);
       setValidated(true);
     }
   };
@@ -43,6 +42,8 @@ function FormContent({ onHide }) {
                 aria-label="Large"
                 aria-describedby="inputGroup-sizing-sm"
                 onChange={(e) => setName(e.target.value)}
+                isInvalid={name.length < 3}
+                isValid={name.length >= 3}
               />
               <Form.Control.Feedback type="invalid">
                 Name needs to be at least 3 characters long
@@ -62,6 +63,8 @@ function FormContent({ onHide }) {
                 aria-label="Large"
                 aria-describedby="inputGroup-sizing-sm"
                 onChange={(e) => setEmail(e.target.value)}
+                isInvalid={!email.includes("@")}
+                isValid={email.includes("@")}
               />
               <Form.Control.Feedback type="invalid">
                 Please provide a valid email.
@@ -81,9 +84,11 @@ function FormContent({ onHide }) {
                 aria-label="Large"
                 aria-describedby="inputGroup-sizing-sm"
                 onChange={(e) => setconfirmEmail(e.target.value)}
+                isInvalid={confirmEmail !== email}
+                isValid={confirmEmail === email}
               />
               <Form.Control.Feedback type="invalid">
-                Please provide a matching email.
+                Email must match
               </Form.Control.Feedback>
             </InputGroup>
           </Form.Group>
@@ -92,7 +97,7 @@ function FormContent({ onHide }) {
             size="lg"
             variant="dark"
             type="submit"
-            style={{ padding: "1% 5% 1% 5%" }} 
+            style={{ padding: "1% 5% 1% 5%" }}
           >
             Send
           </Button>
