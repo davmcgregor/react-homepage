@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-import { Form, Button, InputGroup } from "react-bootstrap";
+import { Form, Button, InputGroup, Spinner } from "react-bootstrap";
 
 const FormContent = ({ onHide }) => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState();
+  const [submitting, setSubmitting] = useState(false);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState(" ");
@@ -22,20 +23,30 @@ const FormContent = ({ onHide }) => {
 
     const isValid = form.checkValidity();
     if (isValid) {
+      setSubmitting(true);
       axios
         .post(
           "https://yo7dm2sa2i.execute-api.eu-west-2.amazonaws.com/prod/signup",
           { name, email }
         )
         .then((res) => {
-          return res.data.success;
+          setSubmitting(false);
         })
         .catch((error) => {
           setError(error.response.data.error);
+          setSubmitting(false);
         });
       setSuccess(true);
     }
   };
+
+  if (submitting) {
+    return (
+      <Spinner animation="border" role="status">
+        <span className="sr-only">Submitting...</span>
+      </Spinner>
+    )
+  }
 
   if (!success) {
     return (
