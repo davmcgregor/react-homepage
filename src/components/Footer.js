@@ -7,14 +7,13 @@ class Footer extends Component {
       <Navbar
         style={{
           borderTop: "3px solid black",
-          width: "100%",
           textAlign: "center",
-          display: "inline"
+          display: "inline-block"
         }}
         fixed="bottom"
         bg="light"
       >
-        <Navbar.Brand>
+        <Navbar.Brand style={{margin: "0"}}>
           <h5>
             Made with<span role="img" aria-label="heart">  ❤️  </span>in London
           </h5>

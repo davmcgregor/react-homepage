@@ -1,0 +1,10 @@
+.modal-content {
+  text-align: center;
+  padding: 3em;
+}
+
+@media (max-width: 800px) {
+  .modal-content {
+    padding: 0;
+  }
+}
