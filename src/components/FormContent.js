@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import axios from "axios";
+
 import { Form, Button, InputGroup } from "react-bootstrap";
 
 function FormContent({ onHide }) {
   const [validated, setValidated] = useState(false);
+  const [error, setError] = useState("");
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState(" ");
@@ -19,6 +22,27 @@ function FormContent({ onHide }) {
       event.preventDefault();
       event.stopPropagation();
     } else {
+      axios
+        .post(
+          "https://yo7dm2sa2i.execute-api.eu-west-2.amazonaws.com/prod/signup",
+          { name, email }
+        )
+        .then((res) => {
+          console.log(res.data.success);
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response.data);
+            setError(error.response.data.error);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+          console.log(error);
+        });
       setValidated(true);
     }
   };
@@ -104,7 +128,7 @@ function FormContent({ onHide }) {
         </Form>
       </div>
     );
-  } else {
+  } else if (error.length < 1) {
     return (
       <div>
         <h1 style={{ padding: "2%" }}>All done!</h1>
@@ -112,6 +136,22 @@ function FormContent({ onHide }) {
           You will be one of the first to be notified when we launch
         </h5>
         <Button
+          type="button"
+          size="lg"
+          variant="dark"
+          style={{ padding: "1% 8% 1% 8%" }}
+          onClick={onHide}
+        >
+          OK
+        </Button>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <h1 style={{ padding: "2%" }}>{error}</h1>
+        <Button
+          type="button"
           size="lg"
           variant="dark"
           style={{ padding: "1% 8% 1% 8%" }}
