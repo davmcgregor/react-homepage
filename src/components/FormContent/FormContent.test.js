@@ -1,6 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 import FormContent from "./FormContent";
-it("renders without crashing", () => {
+
+it("renders the component", () => {
   shallow(<FormContent />);
 });
