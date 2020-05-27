@@ -1,6 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
-import App from "./App";
+import Homepage from "./Homepage";
+
 it("renders without crashing", () => {
-  shallow(<App />);
+  shallow(<Homepage />);
 });

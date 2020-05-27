@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-import FormContent from "../FormContent.js";
+import FormContent from "../FormContent/FormContent.js";
 
 import "./FormModal.css"
 

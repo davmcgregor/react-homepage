@@ -17,6 +17,7 @@ const HomePage = () => {
         style={{ padding: "1% 5% 1% 5%" }}
         variant="dark"
         onClick={() => setModalShow(true)}
+        className="invite"
       >
         Request an invite
       </Button>

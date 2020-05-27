@@ -1,6 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
-import App from "./App";
+import FormModal from "./FormModal";
+
 it("renders without crashing", () => {
-  shallow(<App />);
+  shallow(<FormModal />);
 });

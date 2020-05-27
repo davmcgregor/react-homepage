@@ -22,8 +22,8 @@ $ npm start
 
 ## Further Improvements
 
+* Add more comprehensive testing
 * Refactor return statement to have conditional parts
 * Rebuild the form using [Formik](https://jaredpalmer.com/formik/docs/overview) - especially validation UI
-* Additional testing
 * Improve styling for mobile devices
 
